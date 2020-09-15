@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.sinitek.aidl.IMathAidl;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,21 +22,17 @@ public class MainActivity extends AppCompatActivity {
         intent.setPackage("com.sinitek.transactionserver");//5.0之后启动其他程序service要设置包名，该项目 minSdkVersion 21
         bindService(intent, mConn, Context.BIND_AUTO_CREATE);
     }
-
     private ServiceConnection mConn = new ServiceConnection() {
-
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
         }
-
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             IMathAidl mathAidl = IMathAidl.Stub.asInterface(service);
             try {
                 double result = mathAidl.add(1, 1);
                 Toast.makeText(MainActivity.this, "计算结果为：" + result, Toast.LENGTH_SHORT).show();
-                mathAidl.play(result + "'西京一村夫'的SINITEK冲刺之路.mp4");
+                mathAidl.play("请大家观看服务端播放：'西京一村夫'的SINITEK冲刺之路.mp4");
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
